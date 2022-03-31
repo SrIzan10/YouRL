@@ -14,10 +14,14 @@ app.use(express.urlencoded({ extended: false }));
 const mongoose = require("mongoose");
 
 //App deploy or localhost mode connection to MongoDB
-mongoose.connect(process.env.MONGO_URL || "mongodb://localhost/db", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+const mongooseURI = "mongodb+srv://database:dbyessir@cruzasj.dbvjm.mongodb.net/db"
+if (!mongooseURI) throw new Error("No mongooseURI variable found.");
+mongoose
+    .connect(mongooseURI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    })
+    .then(() => console.log("MongoDB (mongoose) connected."));
 
 // import data model/ schema
 const ShortUrl = require("./models/shortUrl");
